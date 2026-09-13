@@ -3439,10 +3439,10 @@ func classifyLiveDogfoodFailure(t LiveDogfoodTestResult) string {
 	return "other"
 }
 
-// liveDogfoodSuccessExitCodes returns exit 0 plus any code a command declares
-// via pp:typed-exit-codes or a command-level "Exit codes:" help block. Live
-// dogfood records exit 0 as pass and declared non-zero outcomes as skips because
-// there is no successful output to validate.
+// happy_path and json_fidelity share one declared-success set with verify so
+// both gates honor the same typed-exit contract. Exit 0 can pass because
+// there is output to validate; a declared non-zero is a skip because there
+// is no successful body.
 func liveDogfoodSuccessExitCodes(command liveDogfoodCommand) map[int]bool {
 	if command.Annotations != nil {
 		if raw := strings.TrimSpace(command.Annotations[typedExitCodesAnnotation]); raw != "" {
